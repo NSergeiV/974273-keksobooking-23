@@ -6,7 +6,7 @@ const getRandomInteger = function (min, max) {
   if (min > max || min === max) {
     return 'Значение ДО больше или равно значению ОТ';
   }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min)) + min;
 };
 
 getRandomInteger(3, 22);
@@ -20,8 +20,8 @@ const getRandomFloatingPointNumber = function (min, max, floating) {
     return 'Значение ДО больше или равно значению ОТ';
   }
 
-  const result = (Math.random() * (max - min + 1)) + min;
-  return result.toFixed(floating);
+  const result = (Math.random() * (max - min)) + min;
+  return parseFloat(result.toFixed(floating));
 };
 
 getRandomFloatingPointNumber(3, 43, 3);
