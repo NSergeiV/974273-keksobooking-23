@@ -1,3 +1,9 @@
+const SIMILAR_DATA = 10;
+const LATITUDE_MIN = 35.65000;
+const LATITUDE_MAX = 35.70000;
+const LONGITUDE_MIN = 139.70000;
+const LONGITUDE_MAX = 139.80000;
+
 const TITLES = ['Прекрасное гнездышко', 'Отличная квартира', 'Прекрасный вид', 'Солнечное место', 'Позитивная квартира', 'Просторное место', 'Императорский дворец', 'Суши на закате', 'Хрущевка, Аппартоменты'];
 
 const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
@@ -86,8 +92,8 @@ const assignAddress = () => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const fillingObject = () => {
-  const locationX = getRandomFloatingPointNumber(35.65000, 35.70000, 5);
-  const locationY = getRandomFloatingPointNumber(139.70000, 139.80000, 5);
+  const locationX = getRandomFloatingPointNumber(LATITUDE_MIN, LATITUDE_MAX, 5);
+  const locationY = getRandomFloatingPointNumber(LONGITUDE_MIN, LONGITUDE_MAX, 5);
   return {
     author: {avatar: `img/avatars/${assignAddress()}.png`},
     offer: {
@@ -110,6 +116,6 @@ const fillingObject = () => {
   };
 };
 
-const objects = new Array(10).fill(null).map(() => fillingObject());
+const objects = new Array(SIMILAR_DATA).fill(null).map(() => fillingObject());
 
 objects;
