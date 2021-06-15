@@ -123,6 +123,4 @@ const fillingObject = () => {
 
 const objects = new Array(SIMILAR_DATA).fill(null).map(() => fillingObject());
 
-console.log(objects);
-
-console.log("ЗАРАБОТАЛА");
+objects;
