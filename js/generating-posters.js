@@ -37,7 +37,11 @@ const generatingPosters = (ad) => {
         item.remove();
       }
     });
-    newElement.querySelector('.popup__description').textContent = ad.offer.description;
+    if (!ad.offer.description) {
+      newElement.querySelector('.popup__description').remove();
+    } else {
+      newElement.querySelector('.popup__description').textContent = ad.offer.description;
+    }
     const blockPhotos = newElement.querySelector('.popup__photos');
     blockPhotos.querySelector('img').remove();
     for (let j = 0; j < ad.offer.photos.length; j++) {
