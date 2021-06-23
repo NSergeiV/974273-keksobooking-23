@@ -17,7 +17,6 @@ const gettingTypeHousing = (type) => {
       return 'Непонятно!';
   }
 };
-// const collectionAds = objects;
 
 const generatingPosters = (ad) => {
   for (let i = 0; i < 1; i++) {
@@ -49,8 +48,5 @@ const generatingPosters = (ad) => {
   }
   mapCanvas.appendChild(fragment);
 };
-// console.log(fragment);
-
-// mapCanvas.appendChild(fragment);
 
 export {generatingPosters};
