@@ -1,7 +1,7 @@
 const fragment = document.createDocumentFragment();
 const template = document.querySelector('#card').content.querySelector('.popup');
 const mapCanvas = document.querySelector('#map-canvas');
-const gettingTypeHousing = (type) => {
+const receiveTypeHousing = (type) => {
   switch (type) {
     case 'flat':
       return 'Квартира';
@@ -19,7 +19,7 @@ const gettingTypeHousing = (type) => {
 };
 
 const generatingPosters = (ad) => {
-  for (let i = 0; i < 1; i++) {
+  const collectAnAd = () => {
     const conveniences = ad.offer.features;
     const modifiers = conveniences.map((feature) => `popup__feature--${feature}`);
     const newElement = template.cloneNode(true);
@@ -28,7 +28,7 @@ const generatingPosters = (ad) => {
     newElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     newElement.querySelector('.popup__text--price').textContent = ' ';
     newElement.querySelector('.popup__text--price').insertAdjacentHTML('afterbegin', `${ad.offer.price} <span>₽/ночь</span>`);
-    newElement.querySelector('.popup__type').textContent = `${gettingTypeHousing(ad.offer.type)}`;
+    newElement.querySelector('.popup__type').textContent = `${receiveTypeHousing(ad.offer.type)}`;
     newElement.querySelector('.popup__text--capacity').textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
     newElement.querySelector('.popup__text--time').textContent = `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}}`;
     newElement.querySelector('.popup__features').querySelectorAll('.popup__feature').forEach((item) => {
@@ -50,9 +50,9 @@ const generatingPosters = (ad) => {
       blockPhotos.insertAdjacentHTML('beforeend', `<img src="${ad.offer.photos[j]}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
     }
 
-    fragment.appendChild(newElement);
-  }
-  mapCanvas.appendChild(fragment);
+    return fragment.appendChild(newElement);
+  };
+  mapCanvas.appendChild(collectAnAd());
 };
 
 export {generatingPosters};
