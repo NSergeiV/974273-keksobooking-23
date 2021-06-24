@@ -1,3 +1,4 @@
+import './form.js';
 import {fillingObject} from './data.js';
 import {generatingPosters} from './generating-posters.js';
 
