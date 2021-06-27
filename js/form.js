@@ -30,12 +30,12 @@ unlock();
 // Валидация Формы подачи объявления
 const inputTitle = adForm.querySelector('#title');
 const inputPrice = adForm.querySelector('#price');
-const inputType = adForm.querySelector('#type');
+// const inputType = adForm.querySelector('#type');
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
 
-inputTitle.addEventListener('input', (evt) => {
+inputTitle.addEventListener('input', () => {
   const valueLength = inputTitle.value.length;
   if (valueLength < MIN_HEADING) {
     inputTitle.setCustomValidity(`Не хватает ${MIN_HEADING - valueLength} символ`);
@@ -47,7 +47,7 @@ inputTitle.addEventListener('input', (evt) => {
 
   inputTitle.reportValidity();
 });
-inputPrice.addEventListener('input', (evt) => {
+inputPrice.addEventListener('input', () => {
   const valuePrice = inputPrice.value;
   if (valuePrice > MAX_PRICE) {
     inputPrice.setCustomValidity(`Значение должно быть меньше или равно ${MAX_PRICE}`);
