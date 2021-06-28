@@ -1,5 +1,6 @@
-const adForm = document.querySelector('.ad-form');
+
 const mapFilter = document.querySelector('.map__filters');
+const adForm = document.querySelector('.ad-form');
 
 const adFormChildren = adForm.querySelectorAll('fieldset');
 const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
@@ -88,36 +89,19 @@ inputPrice.addEventListener('input', () => {
 
 let numberRooms = selectRoomNumber.querySelector('option[selected]').value;
 let numberGuests = inputCapacity.querySelector('option[selected]').value;
+const guestRooms = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0'],
+};
 
 const checkGuests = (rooms, guests) => {
-  if (rooms === '100') {
-    if (guests !== '0') {
-      inputCapacity.setCustomValidity('Выберите не для гостей');
-    } else {
-      inputCapacity.setCustomValidity('');
-    }
-  } else if (rooms === '3') {
-    if (guests === '0') {
-      inputCapacity.setCustomValidity('Выберите другое количество гостей');
-    } else {
-      inputCapacity.setCustomValidity('');
-    }
-  } else if (rooms === '2') {
-    if (guests === '0' || guests === '3') {
-      inputCapacity.setCustomValidity('Выберите другое количество гостей');
-    } else {
-      inputCapacity.setCustomValidity('');
-    }
-  } else if (rooms === '1') {
-    if (guests === '0' || guests === '3' || guests === '2') {
-      inputCapacity.setCustomValidity('Выберите другое количество гостей');
-    } else {
-      inputCapacity.setCustomValidity('');
-    }
+  if (!guestRooms[rooms].includes(guests)) {
+    inputCapacity.setCustomValidity('Это количество гостей не для этого жилья.');
   } else {
     inputCapacity.setCustomValidity('');
   }
-
   inputCapacity.reportValidity();
 };
 
