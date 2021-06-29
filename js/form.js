@@ -43,10 +43,27 @@ const inputPrice = adForm.querySelector('#price');
 const inputType = adForm.querySelector('#type');
 const selectRoomNumber = adForm.querySelector('#room_number');
 const inputCapacity = adForm.querySelector('#capacity');
+// const timeIn = adForm.querySelector('#timein');
+// const timeOut = adForm.querySelector('#timeout');
+// const timePeriodsIn = timeIn.querySelectorAll('option');
+// const timePeriodsOut = timeOut.querySelectorAll('option');
+
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
 
+// Валидация времени заезда и выездад
+/*timeIn.addEventListener('change', () => {
+
+  // const timeInItem = timeIn.options[timein.selectedIndex].value;
+
+
+  timePeriodsOut.forEach((el) => {
+    if (el.selected) {console.log('НАШЕЛ');}
+  });
+
+});
+*/
 // Валидация заголовка
 inputTitle.addEventListener('input', () => {
   const valueLength = inputTitle.value.length;
@@ -63,21 +80,27 @@ inputTitle.addEventListener('input', () => {
 
 // Валидация цены за жилье на ночь
 
-const selectedPrice = inputType.querySelector('option[selected]').value;
+let selectedPrice = inputType.querySelector('option[selected]').value;
+let nameTypeHousing = inputType.querySelector('option[selected]').text;
+
 
 let minPriceHousing = listMinPriceHousing[selectedPrice];
-inputPrice.value = minPriceHousing;
+inputPrice.placeholder = minPriceHousing;
 inputType.addEventListener('change', () => {
 
   minPriceHousing = listMinPriceHousing[inputType.value];
-  inputPrice.value = minPriceHousing;
+  inputPrice.placeholder = minPriceHousing;
+  selectedPrice = inputType.value;
+
+  nameTypeHousing = inputType.options[inputType.selectedIndex].text;
 });
+
 inputPrice.addEventListener('input', () => {
   const valuePrice = inputPrice.value;
   if (valuePrice > MAX_PRICE) {
     inputPrice.setCustomValidity(`Значение должно быть меньше или равно ${MAX_PRICE}`);
   } else if (valuePrice < minPriceHousing) {
-    inputPrice.setCustomValidity('Такой цены нет');
+    inputPrice.setCustomValidity(`Миниальная цена для ${nameTypeHousing} ${minPriceHousing}`);
   } else {
     inputPrice.setCustomValidity('');
   }
