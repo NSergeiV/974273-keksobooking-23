@@ -37,33 +37,43 @@ const unlock = () => {
 
 unlock();
 // КОНЕЦ блокировки и разблокировки
+
 // Валидация Формы подачи объявления
 const inputTitle = adForm.querySelector('#title');
 const inputPrice = adForm.querySelector('#price');
 const inputType = adForm.querySelector('#type');
 const selectRoomNumber = adForm.querySelector('#room_number');
 const inputCapacity = adForm.querySelector('#capacity');
-// const timeIn = adForm.querySelector('#timein');
-// const timeOut = adForm.querySelector('#timeout');
-// const timePeriodsIn = timeIn.querySelectorAll('option');
-// const timePeriodsOut = timeOut.querySelectorAll('option');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const timePeriodsIn = timeIn.querySelectorAll('option');
+const timePeriodsOut = timeOut.querySelectorAll('option');
 
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
 
-// Валидация времени заезда и выездад
-/*timeIn.addEventListener('change', () => {
+// Валидация времени заезда и выезда
 
-  // const timeInItem = timeIn.options[timein.selectedIndex].value;
+const deleteAttribute = (list, choice) => {
 
-
-  timePeriodsOut.forEach((el) => {
-    if (el.selected) {console.log('НАШЕЛ');}
+  list.forEach((el) => {
+    if (el.value === choice) {
+      el.selected = true;
+    }
   });
+};
 
+timeIn.addEventListener('change', () => {
+  const timeInItem = timeIn.options[timeIn.selectedIndex].value;
+  deleteAttribute(timePeriodsOut, timeInItem);
 });
-*/
+
+timeOut.addEventListener('change', () => {
+  const timeOutItem = timeOut.options[timeOut.selectedIndex].value;
+  deleteAttribute(timePeriodsIn, timeOutItem);
+});
+
 // Валидация заголовка
 inputTitle.addEventListener('input', () => {
   const valueLength = inputTitle.value.length;
@@ -86,10 +96,13 @@ let nameTypeHousing = inputType.querySelector('option[selected]').text;
 
 let minPriceHousing = listMinPriceHousing[selectedPrice];
 inputPrice.placeholder = minPriceHousing;
+inputPrice.setAttribute('min', minPriceHousing);
+
 inputType.addEventListener('change', () => {
 
   minPriceHousing = listMinPriceHousing[inputType.value];
   inputPrice.placeholder = minPriceHousing;
+  inputPrice.min = minPriceHousing;
   selectedPrice = inputType.value;
 
   nameTypeHousing = inputType.options[inputType.selectedIndex].text;
