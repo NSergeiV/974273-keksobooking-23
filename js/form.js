@@ -1,9 +1,21 @@
-
 const mapFilter = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
 
 const adFormChildren = adForm.querySelectorAll('fieldset');
 const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
+const inputTitle = adForm.querySelector('#title');
+const inputPrice = adForm.querySelector('#price');
+const inputType = adForm.querySelector('#type');
+const selectRoomNumber = adForm.querySelector('#room_number');
+const inputCapacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const timePeriodsIn = timeIn.querySelectorAll('option');
+const timePeriodsOut = timeOut.querySelectorAll('option');
+
+const MIN_HEADING = 30;
+const MAX_HEADING = 100;
+const MAX_PRICE = 1000000;
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -11,6 +23,13 @@ const listMinPriceHousing = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
+};
+
+const guestRooms = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0'],
 };
 
 // Блокировка интерактивных полей двух фильтров
@@ -39,24 +58,9 @@ unlock();
 // КОНЕЦ блокировки и разблокировки
 
 // Валидация Формы подачи объявления
-const inputTitle = adForm.querySelector('#title');
-const inputPrice = adForm.querySelector('#price');
-const inputType = adForm.querySelector('#type');
-const selectRoomNumber = adForm.querySelector('#room_number');
-const inputCapacity = adForm.querySelector('#capacity');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-const timePeriodsIn = timeIn.querySelectorAll('option');
-const timePeriodsOut = timeOut.querySelectorAll('option');
-
-const MIN_HEADING = 30;
-const MAX_HEADING = 100;
-const MAX_PRICE = 1000000;
-
 // Валидация времени заезда и выезда
 
 const deleteAttribute = (list, choice) => {
-
   list.forEach((el) => {
     if (el.value === choice) {
       el.selected = true;
@@ -65,12 +69,12 @@ const deleteAttribute = (list, choice) => {
 };
 
 timeIn.addEventListener('change', () => {
-  const timeInItem = timeIn.options[timeIn.selectedIndex].value;
+  const timeInItem = timeIn.value;
   deleteAttribute(timePeriodsOut, timeInItem);
 });
 
 timeOut.addEventListener('change', () => {
-  const timeOutItem = timeOut.options[timeOut.selectedIndex].value;
+  const timeOutItem = timeOut.value;
   deleteAttribute(timePeriodsIn, timeOutItem);
 });
 
@@ -96,7 +100,7 @@ let nameTypeHousing = inputType.querySelector('option[selected]').text;
 
 let minPriceHousing = listMinPriceHousing[selectedPrice];
 inputPrice.placeholder = minPriceHousing;
-inputPrice.setAttribute('min', minPriceHousing);
+inputPrice.min = minPriceHousing;
 
 inputType.addEventListener('change', () => {
 
@@ -125,12 +129,6 @@ inputPrice.addEventListener('input', () => {
 
 let numberRooms = selectRoomNumber.querySelector('option[selected]').value;
 let numberGuests = inputCapacity.querySelector('option[selected]').value;
-const guestRooms = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '100': ['0'],
-};
 
 const checkGuests = (rooms, guests) => {
   if (!guestRooms[rooms].includes(guests)) {
