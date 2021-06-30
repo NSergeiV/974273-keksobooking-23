@@ -1,9 +1,19 @@
+const MIN_HEADING = 30;
+const MAX_HEADING = 100;
+const MAX_PRICE = 1000000;
 
 const mapFilter = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
 
 const adFormChildren = adForm.querySelectorAll('fieldset');
 const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
+const inputTitle = adForm.querySelector('#title');
+const inputPrice = adForm.querySelector('#price');
+const inputType = adForm.querySelector('#type');
+const selectRoomNumber = adForm.querySelector('#room_number');
+const inputCapacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -11,6 +21,13 @@ const listMinPriceHousing = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
+};
+
+const guestRooms = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0'],
 };
 
 // Блокировка интерактивных полей двух фильтров
@@ -36,16 +53,14 @@ const unlock = () => {
 };
 
 unlock();
-// КОНЕЦ блокировки и разблокировки
-// Валидация Формы подачи объявления
-const inputTitle = adForm.querySelector('#title');
-const inputPrice = adForm.querySelector('#price');
-const inputType = adForm.querySelector('#type');
-const selectRoomNumber = adForm.querySelector('#room_number');
-const inputCapacity = adForm.querySelector('#capacity');
-const MIN_HEADING = 30;
-const MAX_HEADING = 100;
-const MAX_PRICE = 1000000;
+
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
 
 // Валидация заголовка
 inputTitle.addEventListener('input', () => {
@@ -63,21 +78,30 @@ inputTitle.addEventListener('input', () => {
 
 // Валидация цены за жилье на ночь
 
-const selectedPrice = inputType.querySelector('option[selected]').value;
+let selectedPrice = inputType.querySelector('option[selected]').value;
+let nameTypeHousing = inputType.querySelector('option[selected]').text;
+
 
 let minPriceHousing = listMinPriceHousing[selectedPrice];
-inputPrice.value = minPriceHousing;
+inputPrice.placeholder = minPriceHousing;
+inputPrice.min = minPriceHousing;
+
 inputType.addEventListener('change', () => {
 
   minPriceHousing = listMinPriceHousing[inputType.value];
-  inputPrice.value = minPriceHousing;
+  inputPrice.placeholder = minPriceHousing;
+  inputPrice.min = minPriceHousing;
+  selectedPrice = inputType.value;
+
+  nameTypeHousing = inputType.options[inputType.selectedIndex].text;
 });
+
 inputPrice.addEventListener('input', () => {
   const valuePrice = inputPrice.value;
   if (valuePrice > MAX_PRICE) {
     inputPrice.setCustomValidity(`Значение должно быть меньше или равно ${MAX_PRICE}`);
   } else if (valuePrice < minPriceHousing) {
-    inputPrice.setCustomValidity('Такой цены нет');
+    inputPrice.setCustomValidity(`Миниальная цена для ${nameTypeHousing} ${minPriceHousing}`);
   } else {
     inputPrice.setCustomValidity('');
   }
@@ -89,12 +113,6 @@ inputPrice.addEventListener('input', () => {
 
 let numberRooms = selectRoomNumber.querySelector('option[selected]').value;
 let numberGuests = inputCapacity.querySelector('option[selected]').value;
-const guestRooms = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '100': ['0'],
-};
 
 const checkGuests = (rooms, guests) => {
   if (!guestRooms[rooms].includes(guests)) {
