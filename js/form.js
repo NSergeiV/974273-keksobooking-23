@@ -14,8 +14,6 @@ const selectRoomNumber = adForm.querySelector('#room_number');
 const inputCapacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-const timePeriodsIn = timeIn.querySelectorAll('option');
-const timePeriodsOut = timeOut.querySelectorAll('option');
 
 const listMinPriceHousing = {
   bungalow: 0,
