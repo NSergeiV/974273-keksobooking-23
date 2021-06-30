@@ -1,3 +1,7 @@
+const MIN_HEADING = 30;
+const MAX_HEADING = 100;
+const MAX_PRICE = 1000000;
+
 const mapFilter = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
 
@@ -12,10 +16,6 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const timePeriodsIn = timeIn.querySelectorAll('option');
 const timePeriodsOut = timeOut.querySelectorAll('option');
-
-const MIN_HEADING = 30;
-const MAX_HEADING = 100;
-const MAX_PRICE = 1000000;
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -55,27 +55,13 @@ const unlock = () => {
 };
 
 unlock();
-// КОНЕЦ блокировки и разблокировки
-
-// Валидация Формы подачи объявления
-// Валидация времени заезда и выезда
-
-const deleteAttribute = (list, choice) => {
-  list.forEach((el) => {
-    if (el.value === choice) {
-      el.selected = true;
-    }
-  });
-};
 
 timeIn.addEventListener('change', () => {
-  const timeInItem = timeIn.value;
-  deleteAttribute(timePeriodsOut, timeInItem);
+  timeOut.value = timeIn.value;
 });
 
 timeOut.addEventListener('change', () => {
-  const timeOutItem = timeOut.value;
-  deleteAttribute(timePeriodsIn, timeOutItem);
+  timeIn.value = timeOut.value;
 });
 
 // Валидация заголовка
