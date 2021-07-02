@@ -1,4 +1,4 @@
-const fragment = document.createDocumentFragment();
+/*const fragment = document.createDocumentFragment();
 const template = document.querySelector('#card').content.querySelector('.popup');
 const mapCanvas = document.querySelector('#map-canvas');
 const receiveTypeHousing = (type) => {
@@ -54,5 +54,5 @@ const generatingPosters = (ad) => {
   };
   mapCanvas.appendChild(collectAnAd());
 };
-
-export {generatingPosters};
+*/
+// export {generatingPosters};
