@@ -14,6 +14,7 @@ const selectRoomNumber = adForm.querySelector('#room_number');
 const inputCapacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const inputAddress = adForm.querySelector('#address');
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -41,21 +42,6 @@ const blockIt = (block, listChildren) => {
 blockIt(adForm, adFormChildren);
 blockIt(mapFilter, mapFilterChildren);
 
-// Загрузка карты и ее меток
-const map = L.map('map-canvas').setView({
-  lat: 59.92749,
-  lng: 30.31127,
-}, 10);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
-// КОНЕЦ закгрузки карты
-
 // Разблокировка интерактивных полей двух фильтров
 const unlock = () => {
   adForm.classList.remove('ad-form--disabled');
@@ -68,8 +54,12 @@ const unlock = () => {
   });
 };
 
-unlock();
+// Валидация поля Адресс
+const enterСoordinates = (lat, lng) => {
+  inputAddress.value = `${Number(lat.toFixed(5))}, ${Number(lng.toFixed(5))}`;
+};
 
+// Валидация поля времени заезда и выезда
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
 });
@@ -148,3 +138,5 @@ inputCapacity.addEventListener('change', () => {
   numberGuests = inputCapacity.value;
   checkGuests(numberRooms, numberGuests);
 });
+
+export {enterСoordinates, unlock};
