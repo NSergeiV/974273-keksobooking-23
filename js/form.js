@@ -18,6 +18,7 @@ const inputCapacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const inputAddress = adForm.querySelector('#address');
+const buttonReset = adForm.querySelector('.ad-form__reset');
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -143,10 +144,10 @@ inputCapacity.addEventListener('change', () => {
 });
 
 // Отправка данных, нажатие кнопки
-const adDataSetSubmit = () => {
+const adDataSetSubmit = (onSuccess, onError) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    sendData(new FormData(evt.target));
+    sendData(() => onSuccess(), () => onError(), new FormData(evt.target));
   });
 };
 
@@ -156,6 +157,6 @@ const onClearForm = () => {
   addMainMarker();
 };
 
-adForm.addEventListener('reset', onClearForm);
+buttonReset.addEventListener('click', onClearForm);
 
-export {enterСoordinates, unlock, adDataSetSubmit};
+export {enterСoordinates, unlock, adDataSetSubmit, onClearForm};

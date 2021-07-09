@@ -22,24 +22,22 @@ const getData = (onSuccess) => {
     });
 };
 
-const sendData = (body) => {
+const sendData = (onSuccess, onError, body) => {
   fetch(
     'https://23.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
       body,
     },
-  );
-
-  /*.then((response) => {
+  ).then((response) => {
     if(response.ok) {
-
+      onSuccess();
     } else {
-      showAlert(`${response.status} ${response.statusText}`);
+      onError();
     }
-  }).catch((error) => {
-    showAlert(error);
-  });*/
+  }).catch(() => {
+    onError();
+  });
 };
 
 export {getData, sendData};

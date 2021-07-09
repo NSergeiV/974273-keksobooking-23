@@ -3,6 +3,7 @@ import './map.js';
 import {getData} from './create-fetch.js';
 import {generatingPosters} from './map.js';
 import {adDataSetSubmit} from './form.js';
+import {pushGoodData, errorPushData} from './banner-pushServer.js';
 
 // const SIMILAR_DATA = 10;
 
@@ -14,4 +15,4 @@ getData((ads) => {
   generatingPosters(ads);
 });
 
-adDataSetSubmit();
+adDataSetSubmit(pushGoodData, errorPushData);
