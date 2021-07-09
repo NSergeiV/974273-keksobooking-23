@@ -1,3 +1,6 @@
+import {sendData} from './create-fetch.js';
+import {addMainMarker} from './map.js';
+
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
@@ -139,4 +142,20 @@ inputCapacity.addEventListener('change', () => {
   checkGuests(numberRooms, numberGuests);
 });
 
-export {enterСoordinates, unlock};
+// Отправка данных, нажатие кнопки
+const adDataSetSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(new FormData(evt.target));
+  });
+};
+
+// Очистка формы, нажатие кнопки - очистить
+const onClearForm = () => {
+  adForm.reset();
+  addMainMarker();
+};
+
+adForm.addEventListener('reset', onClearForm);
+
+export {enterСoordinates, unlock, adDataSetSubmit};
