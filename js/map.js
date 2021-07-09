@@ -39,15 +39,20 @@ const mainPinMarker = L.marker({
 
 mainPinMarker.addTo(map);
 
+const expose = () => {
+  enterСoordinates(LAT_TOKYO, LNG_TOKYO);
+};
+
 const addMainMarker = () => {
   mainPinMarker.setLatLng({
     lat: LAT_TOKYO,
     lng: LNG_TOKYO,
   });
-  enterСoordinates(mainPinMarker._latlng.lat, mainPinMarker._latlng.lng);
+  expose();
 };
 
-enterСoordinates(mainPinMarker._latlng.lat, mainPinMarker._latlng.lng);
+expose();
+// enterСoordinates(mainPinMarker.getLatLng().lat, mainPinMarker._latlng.lng);
 mainPinMarker.on('moveend', (evt) => {
   enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
 });
