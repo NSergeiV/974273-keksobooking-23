@@ -1,3 +1,6 @@
+import {sendData} from './create-fetch.js';
+import {addMainMarker} from './map.js';
+
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
@@ -15,6 +18,7 @@ const inputCapacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const inputAddress = adForm.querySelector('#address');
+const buttonReset = adForm.querySelector('.ad-form__reset');
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -139,4 +143,20 @@ inputCapacity.addEventListener('change', () => {
   checkGuests(numberRooms, numberGuests);
 });
 
-export {enterСoordinates, unlock};
+// Отправка данных, нажатие кнопки
+const adDataSetSubmit = (onSuccess, onError) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(() => onSuccess(), () => onError(), new FormData(evt.target));
+  });
+};
+
+// Очистка формы, нажатие кнопки - очистить
+const onClearForm = () => {
+  adForm.reset();
+  addMainMarker();
+};
+
+buttonReset.addEventListener('click', onClearForm);
+
+export {enterСoordinates, unlock, adDataSetSubmit, onClearForm};
