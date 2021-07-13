@@ -1,6 +1,7 @@
-import {enterСoordinates, unlockForm, unlockFilter} from './form.js';
+import {enterСoordinates, unlockForm} from './form.js';
 import {createCustomPopup} from './create-popup-data-ad.js';
 import {getData} from './create-fetch.js';
+import {unlockFilter, selectMarkers} from './filter.js';
 
 const LAT_TOKYO = 35.681679;
 const LNG_TOKYO = 139.753867;
@@ -10,11 +11,13 @@ const MAIN_MARKER_SIZE_WIDTH = 52;
 const MAIN_MARKER_SIZE_HEIGHT = 52;
 const MARKER_SIZE_WIDTH = 40;
 const MARKER_SIZE_HEIGHT = 40;
+let database = new Array();
 
 const drawMarker = () => {
   unlockForm();
   getData((ads) => {
-    unlockFilter(ads);
+    database = ads;
+    unlockFilter(database.slice());
   });
 };
 
@@ -49,6 +52,7 @@ mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
   enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
+  selectMarkers(database.slice());
 });
 
 const expose = () => {
@@ -64,6 +68,8 @@ const addMainMarker = () => {
 };
 
 expose();
+
+const markerGroup = L.layerGroup().addTo(map);
 
 // Генерация карты и маркеров на страницу
 const generatingPosters = (ads) => {
@@ -81,7 +87,7 @@ const generatingPosters = (ads) => {
     }, {
       iconAd,
     });
-    adMarker.addTo(map).bindPopup(
+    adMarker.addTo(markerGroup).bindPopup(
       createCustomPopup(ad),
       {
         keepInView: true,
