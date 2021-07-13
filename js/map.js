@@ -1,5 +1,6 @@
-import {enterСoordinates, unlock} from './form.js';
+import {enterСoordinates, unlockForm, unlockFilter} from './form.js';
 import {createCustomPopup} from './create-popup-data-ad.js';
+import {getData} from './create-fetch.js';
 
 const LAT_TOKYO = 35.681679;
 const LNG_TOKYO = 139.753867;
@@ -10,7 +11,14 @@ const MAIN_MARKER_SIZE_HEIGHT = 52;
 const MARKER_SIZE_WIDTH = 40;
 const MARKER_SIZE_HEIGHT = 40;
 
-const map = L.map('map-canvas').on('load', unlock).setView({
+const drawMarker = () => {
+  unlockForm();
+  getData((ads) => {
+    unlockFilter(ads);
+  });
+};
+
+const map = L.map('map-canvas').on('load', drawMarker).setView({
   lat: LAT_TOKYO, // широта центра Токио
   lng: LNG_TOKYO, // долгота центра Токио
 }, 13);
@@ -39,6 +47,10 @@ const mainPinMarker = L.marker({
 
 mainPinMarker.addTo(map);
 
+mainPinMarker.on('moveend', (evt) => {
+  enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
+});
+
 const expose = () => {
   enterСoordinates(LAT_TOKYO, LNG_TOKYO);
 };
@@ -52,10 +64,6 @@ const addMainMarker = () => {
 };
 
 expose();
-// enterСoordinates(mainPinMarker.getLatLng().lat, mainPinMarker._latlng.lng);
-mainPinMarker.on('moveend', (evt) => {
-  enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
-});
 
 // Генерация карты и маркеров на страницу
 const generatingPosters = (ads) => {
@@ -81,5 +89,6 @@ const generatingPosters = (ads) => {
     );
   });
 };
+// КОНЕЦ блока генерации
 
-export {generatingPosters, addMainMarker};
+export {generatingPosters, addMainMarker, drawMarker};
