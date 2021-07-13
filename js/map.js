@@ -50,11 +50,6 @@ const mainPinMarker = L.marker({
 
 mainPinMarker.addTo(map);
 
-mainPinMarker.on('moveend', (evt) => {
-  enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
-  selectMarkers(database.slice());
-});
-
 const expose = () => {
   enterСoordinates(LAT_TOKYO, LNG_TOKYO);
 };
@@ -96,5 +91,12 @@ const generatingPosters = (ads) => {
   });
 };
 // КОНЕЦ блока генерации
+
+// Перемещение маркера по карте и передача координат
+mainPinMarker.on('moveend', (evt) => {
+  enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
+  markerGroup.clearLayers();
+  selectMarkers(database.slice());
+});
 
 export {generatingPosters, addMainMarker, drawMarker};
