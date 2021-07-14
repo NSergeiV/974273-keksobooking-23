@@ -1,7 +1,8 @@
 import {enterСoordinates, unlockForm} from './form.js';
 import {createCustomPopup} from './create-popup-data-ad.js';
 import {getData} from './create-fetch.js';
-import {unlockFilter, selectMarkers} from './filter.js';
+import {unlockFilter, /*selectMarkers,*/dataSetForSearch} from './filter.js';
+import {sortAds} from './filter-sort.js';
 
 const LAT_TOKYO = 35.681679;
 const LNG_TOKYO = 139.753867;
@@ -95,8 +96,9 @@ const generatingPosters = (ads) => {
 // Перемещение маркера по карте и передача координат
 mainPinMarker.on('moveend', (evt) => {
   enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
-  markerGroup.clearLayers();
-  selectMarkers(database.slice());
+  // markerGroup.clearLayers();
+  // selectMarkers(database.slice());
+  sortAds(dataSetForSearch);
 });
 
-export {generatingPosters, addMainMarker, drawMarker};
+export {generatingPosters, addMainMarker, drawMarker, database, markerGroup};

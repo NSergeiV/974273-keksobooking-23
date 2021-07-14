@@ -1,11 +1,24 @@
-import {generatingPosters} from './map.js';
+import {generatingPosters, markerGroup} from './map.js';
 import {inputAddress} from './form.js';
+import {sortAds} from './filter-sort.js';
 
 const SIMILAR_AD_COUNT = 10;
+const dataSetForSearch = {
+  features: [],
+  guests: 'any',
+  price: 'any',
+  rooms: 'any',
+  type: 'any',
+};
 
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
-// const housingType = mapFilter.querySelector('#housing-type');
+const housingType = mapFilter.querySelector('#housing-type');
+const housingPrice = mapFilter.querySelector('#housing-price');
+// const housingRooms = mapFilter.querySelector('#housing-rooms');
+// const housingGuests = mapFilter.querySelector('#housing-guests');
+// const mapFeatures = mapFilter.querySelector('#map__features');
+
 
 // Сортируем по удаленности
 const sortByDistance = (set) => {
@@ -23,6 +36,7 @@ const sortByDistance = (set) => {
 const selectMarkers = (ads) => {
   const allAds = ads.slice();
   const similarAds = sortByDistance(allAds).slice(0, SIMILAR_AD_COUNT);
+  markerGroup.clearLayers();
   // const selectedType = housingType.querySelector('option[selected]').value;
   generatingPosters(similarAds);
 };
@@ -36,4 +50,19 @@ const unlockFilter = (ads) => {
   });
 };
 
-export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers};
+// Изменение запроса данных фильтра
+housingType.addEventListener('change', (evt) => {
+  const typeHousing = evt.target.value;
+  // console.log(typeHousing);
+  dataSetForSearch.type = typeHousing;
+  // console.log(dataSetForSearch.type);
+  sortAds(dataSetForSearch);
+});
+
+housingPrice.addEventListener('change', (evt) => {
+  const price = evt.target.value;
+  dataSetForSearch.price = price;
+  sortAds(dataSetForSearch);
+});
+
+export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch};
