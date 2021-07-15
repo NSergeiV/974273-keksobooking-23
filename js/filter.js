@@ -15,9 +15,9 @@ const mapFilter = document.querySelector('.map__filters');
 const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
 const housingType = mapFilter.querySelector('#housing-type');
 const housingPrice = mapFilter.querySelector('#housing-price');
-// const housingRooms = mapFilter.querySelector('#housing-rooms');
-// const housingGuests = mapFilter.querySelector('#housing-guests');
-// const mapFeatures = mapFilter.querySelector('#map__features');
+const housingRooms = mapFilter.querySelector('#housing-rooms');
+const housingGuests = mapFilter.querySelector('#housing-guests');
+const mapFeatures = mapFilter.querySelector('#housing-features');
 
 
 // Сортируем по удаленности
@@ -63,6 +63,32 @@ housingPrice.addEventListener('change', (evt) => {
   const price = evt.target.value;
   dataSetForSearch.price = price;
   sortAds(dataSetForSearch);
+});
+
+housingRooms.addEventListener('change', (evt) => {
+  const rooms = evt.target.value;
+  dataSetForSearch.rooms = rooms;
+  sortAds(dataSetForSearch);
+});
+
+housingGuests.addEventListener('change', (evt) => {
+  const guests = evt.target.value;
+  dataSetForSearch.guests = guests;
+  sortAds(dataSetForSearch);
+});
+
+mapFeatures.addEventListener('change', (evt) => {
+
+  if (dataSetForSearch.features.includes(evt.target.value)) {
+    const indexFeatures = dataSetForSearch.features.indexOf(evt.target.value);
+
+    dataSetForSearch.features.splice(indexFeatures, 1);
+    sortAds(dataSetForSearch);
+  } else {
+
+    dataSetForSearch.features.push(evt.target.value);
+    sortAds(dataSetForSearch);
+  }
 });
 
 export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch};
