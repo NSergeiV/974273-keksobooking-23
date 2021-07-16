@@ -1,8 +1,11 @@
 import {generatingPosters, markerGroup} from './map.js';
 import {inputAddress} from './form.js';
 import {sortAds} from './filter-sort.js';
+import {debounce} from './debounce.js';
 
 const SIMILAR_AD_COUNT = 10;
+const RERENDER_DELAY = 2000;
+
 const dataSetForSearch = {
   features: [],
   guests: 'any',
@@ -37,7 +40,6 @@ const selectMarkers = (ads) => {
   const allAds = ads.slice();
   const similarAds = sortByDistance(allAds).slice(0, SIMILAR_AD_COUNT);
   markerGroup.clearLayers();
-  // const selectedType = housingType.querySelector('option[selected]').value;
   generatingPosters(similarAds);
 };
 
@@ -53,10 +55,10 @@ const unlockFilter = (ads) => {
 // Изменение запроса данных фильтра
 housingType.addEventListener('change', (evt) => {
   const typeHousing = evt.target.value;
-  // console.log(typeHousing);
   dataSetForSearch.type = typeHousing;
-  // console.log(dataSetForSearch.type);
-  sortAds(dataSetForSearch);
+  // sortAds(dataSetForSearch);
+  // debounce(() => timeOut(), RERENDER_DELAY);
+  debounce(sortAds(dataSetForSearch),RERENDER_DELAY);
 });
 
 housingPrice.addEventListener('change', (evt) => {

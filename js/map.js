@@ -1,7 +1,7 @@
 import {enterСoordinates, unlockForm} from './form.js';
 import {createCustomPopup} from './create-popup-data-ad.js';
 import {getData} from './create-fetch.js';
-import {unlockFilter, /*selectMarkers,*/dataSetForSearch} from './filter.js';
+import {unlockFilter, dataSetForSearch} from './filter.js';
 import {sortAds} from './filter-sort.js';
 
 const LAT_TOKYO = 35.681679;
