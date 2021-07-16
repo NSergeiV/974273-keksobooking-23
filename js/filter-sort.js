@@ -2,11 +2,7 @@ import {database} from './map.js';
 import {selectMarkers} from './filter.js';
 
 const sortAds = (adData) => {
-  // console.log(adData);
-  // console.log(database);
   const check = () => {
-
-    // const keys = Object.keys(adData);
 
     let result = true;
 

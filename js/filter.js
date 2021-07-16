@@ -4,7 +4,6 @@ import {sortAds} from './filter-sort.js';
 import {debounce} from './debounce.js';
 
 const SIMILAR_AD_COUNT = 10;
-// const RERENDER_DELAY = 2000;
 
 const dataSetForSearch = {
   features: [],
@@ -54,34 +53,39 @@ const unlockFilter = (ads) => {
 
 // Изменение запроса данных фильтра
 
-const onChange = (evt) => {
+const onChangeTypeHousing = (evt) => {
   const typeHousing = evt.target.value;
   dataSetForSearch.type = typeHousing;
   sortAds(dataSetForSearch);
 };
 
-housingType.addEventListener('change', debounce(onChange));
+housingType.addEventListener('change', debounce(onChangeTypeHousing));
 
-housingPrice.addEventListener('change', (evt) => {
+const onChangePrice = (evt) => {
   const price = evt.target.value;
   dataSetForSearch.price = price;
   sortAds(dataSetForSearch);
-});
+};
 
-housingRooms.addEventListener('change', (evt) => {
+housingPrice.addEventListener('change', debounce(onChangePrice));
+
+const onChangeRooms = (evt) => {
   const rooms = evt.target.value;
   dataSetForSearch.rooms = rooms;
   sortAds(dataSetForSearch);
-});
+};
 
-housingGuests.addEventListener('change', (evt) => {
+housingRooms.addEventListener('change', debounce(onChangeRooms));
+
+const onChangeGuests = (evt) => {
   const guests = evt.target.value;
   dataSetForSearch.guests = guests;
   sortAds(dataSetForSearch);
-});
+};
 
-mapFeatures.addEventListener('change', (evt) => {
+housingGuests.addEventListener('change', debounce(onChangeGuests));
 
+const onChangeFeatures = (evt) => {
   if (dataSetForSearch.features.includes(evt.target.value)) {
     const indexFeatures = dataSetForSearch.features.indexOf(evt.target.value);
 
@@ -92,6 +96,8 @@ mapFeatures.addEventListener('change', (evt) => {
     dataSetForSearch.features.push(evt.target.value);
     sortAds(dataSetForSearch);
   }
-});
+};
+
+mapFeatures.addEventListener('change', debounce(onChangeFeatures));
 
 export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch};

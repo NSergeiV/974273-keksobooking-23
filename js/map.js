@@ -61,6 +61,7 @@ const addMainMarker = () => {
     lng: LNG_TOKYO,
   });
   expose();
+  sortAds(dataSetForSearch);
 };
 
 expose();
@@ -96,8 +97,6 @@ const generatingPosters = (ads) => {
 // Перемещение маркера по карте и передача координат
 mainPinMarker.on('moveend', (evt) => {
   enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
-  // markerGroup.clearLayers();
-  // selectMarkers(database.slice());
   sortAds(dataSetForSearch);
 });
 
