@@ -1,7 +1,7 @@
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/
 
-const debounce = (callback, timeoutDelay) => {
+function debounce (callback, timeoutDelay = 2000) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
 
@@ -18,6 +18,6 @@ const debounce = (callback, timeoutDelay) => {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-};
+}
 
 export {debounce};

@@ -4,7 +4,7 @@ import {sortAds} from './filter-sort.js';
 import {debounce} from './debounce.js';
 
 const SIMILAR_AD_COUNT = 10;
-const RERENDER_DELAY = 2000;
+// const RERENDER_DELAY = 2000;
 
 const dataSetForSearch = {
   features: [],
@@ -53,13 +53,14 @@ const unlockFilter = (ads) => {
 };
 
 // Изменение запроса данных фильтра
-housingType.addEventListener('change', (evt) => {
+
+const onChange = (evt) => {
   const typeHousing = evt.target.value;
   dataSetForSearch.type = typeHousing;
-  // sortAds(dataSetForSearch);
-  // debounce(() => timeOut(), RERENDER_DELAY);
-  debounce(sortAds(dataSetForSearch),RERENDER_DELAY);
-});
+  sortAds(dataSetForSearch);
+};
+
+housingType.addEventListener('change', debounce(onChange));
 
 housingPrice.addEventListener('change', (evt) => {
   const price = evt.target.value;
