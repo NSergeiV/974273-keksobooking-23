@@ -1,6 +1,13 @@
 import {database} from './map.js';
 import {selectMarkers} from './filter.js';
 
+const ANY_CHOICE = 'any';
+const MIDDLE_CHOICE = 'middle';
+const LOW_CHOICE = 'low';
+const HIGH_CHOICE = 'high';
+const MIN_PRICE = 10000;
+const MAX_PRICE = 50000;
+
 const checkFeatures = (choice, base) => {
   if (base) {
     return choice.every((feature) => base.includes(feature));
@@ -9,38 +16,37 @@ const checkFeatures = (choice, base) => {
 };
 
 const checkGuests = (choice, base) => {
-  if (choice !== 'any' && Number(choice) !== base) {
+  if (choice !== ANY_CHOICE && Number(choice) !== base) {
     return false;
   }
   return true;
 };
 
 const checkPrice = (choice, base) => {
-  if (choice !== 'any') {
-    if (choice === 'middle') {
-      if (base < 10000 || base > 50000) {return false;}
-      return true;
-    }
-    if (choice === 'low' && base >= 10000) {
-      return false;
-    }
-    if (choice === 'high' && base <= 50000) {
-      return false;
-    }
+  if (choice === ANY_CHOICE) {
     return true;
+  }
+  if (choice === MIDDLE_CHOICE) {
+    return base >= MIN_PRICE && base <= MAX_PRICE;
+  }
+  if (choice === LOW_CHOICE) {
+    return base < MIN_PRICE;
+  }
+  if (choice === HIGH_CHOICE ) {
+    return base > MAX_PRICE;
   }
   return true;
 };
 
 const checkRooms = (choice, base) => {
-  if (choice !== 'any' && Number(choice) !== base) {
+  if (choice !== ANY_CHOICE && Number(choice) !== base) {
     return false;
   }
   return true;
 };
 
 const checkType = (choice, base) => {
-  if (choice !== 'any' && choice !== base) {
+  if (choice !== ANY_CHOICE && choice !== base) {
     return false;
   }
   return true;

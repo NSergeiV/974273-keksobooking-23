@@ -1,5 +1,4 @@
 import {generatingPosters} from './map.js';
-// import {inputAddress} from './form.js';
 import {sortAds} from './filter-sort.js';
 import {debounce} from './debounce.js';
 
