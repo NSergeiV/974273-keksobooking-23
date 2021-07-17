@@ -21,22 +21,6 @@ const housingRooms = mapFilter.querySelector('#housing-rooms');
 const housingGuests = mapFilter.querySelector('#housing-guests');
 const mapFeatures =mapFilter.querySelectorAll('#housing-features input');
 
-// console.log(mapFeatures);
-
-/*
-// Сортируем по удаленности
-const sortByDistance = (set) => {
-  const mainMarkerAdres = inputAddress.value;
-  const coordinates = mainMarkerAdres.split(', ');
-  set.sort((a, b) => {
-    const differenceOne = Math.sqrt(Math.pow((Number(coordinates[0]) - a.location.lat), 2) + Math.pow((Number(coordinates[1]) - a.location.lng), 2));
-    const differenceTwo = Math.sqrt(Math.pow((Number(coordinates[0]) - b.location.lat), 2) + Math.pow((Number(coordinates[1]) - b.location.lng), 2));
-    const rangeDiff = differenceOne - differenceTwo;
-    return rangeDiff;
-  });
-  return set;
-};
-*/
 // Отправка массива из 10 на отрисовку в карту
 const selectMarkers = (ads) => {
   const allAds = ads.slice();
@@ -62,9 +46,6 @@ const onChangeFilter = () => {
   dataSetForSearch.rooms = housingRooms.value;
   dataSetForSearch.guests = housingGuests.value;
   dataSetForSearch.features = Array.from(mapFeatures).filter((feature) => feature.checked).map((feature) => feature.value);
-
-  // console.log(dataSetForSearch.features);
-  // console.log(Array.from(mapFeatures).filter((feature) => feature.checked));
 
   sortAds(dataSetForSearch);
 };
