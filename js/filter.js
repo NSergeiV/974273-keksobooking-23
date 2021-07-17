@@ -1,5 +1,5 @@
-import {generatingPosters, markerGroup} from './map.js';
-import {inputAddress} from './form.js';
+import {generatingPosters} from './map.js';
+// import {inputAddress} from './form.js';
 import {sortAds} from './filter-sort.js';
 import {debounce} from './debounce.js';
 
@@ -19,9 +19,11 @@ const housingType = mapFilter.querySelector('#housing-type');
 const housingPrice = mapFilter.querySelector('#housing-price');
 const housingRooms = mapFilter.querySelector('#housing-rooms');
 const housingGuests = mapFilter.querySelector('#housing-guests');
-const mapFeatures = mapFilter.querySelector('#housing-features');
+const mapFeatures =mapFilter.querySelectorAll('#housing-features input');
 
+// console.log(mapFeatures);
 
+/*
 // Сортируем по удаленности
 const sortByDistance = (set) => {
   const mainMarkerAdres = inputAddress.value;
@@ -34,11 +36,12 @@ const sortByDistance = (set) => {
   });
   return set;
 };
-
+*/
+// Отправка массива из 10 на отрисовку в карту
 const selectMarkers = (ads) => {
   const allAds = ads.slice();
-  const similarAds = sortByDistance(allAds).slice(0, SIMILAR_AD_COUNT);
-  markerGroup.clearLayers();
+  const similarAds = allAds.slice(0, SIMILAR_AD_COUNT);
+
   generatingPosters(similarAds);
 };
 
@@ -53,51 +56,19 @@ const unlockFilter = (ads) => {
 
 // Изменение запроса данных фильтра
 
-const onChangeTypeHousing = (evt) => {
-  const typeHousing = evt.target.value;
-  dataSetForSearch.type = typeHousing;
+const onChangeFilter = () => {
+  dataSetForSearch.type = housingType.value;
+  dataSetForSearch.price = housingPrice.value;
+  dataSetForSearch.rooms = housingRooms.value;
+  dataSetForSearch.guests = housingGuests.value;
+  dataSetForSearch.features = Array.from(mapFeatures).filter((feature) => feature.checked).map((feature) => feature.value);
+
+  // console.log(dataSetForSearch.features);
+  // console.log(Array.from(mapFeatures).filter((feature) => feature.checked));
+
   sortAds(dataSetForSearch);
 };
 
-housingType.addEventListener('change', debounce(onChangeTypeHousing));
-
-const onChangePrice = (evt) => {
-  const price = evt.target.value;
-  dataSetForSearch.price = price;
-  sortAds(dataSetForSearch);
-};
-
-housingPrice.addEventListener('change', debounce(onChangePrice));
-
-const onChangeRooms = (evt) => {
-  const rooms = evt.target.value;
-  dataSetForSearch.rooms = rooms;
-  sortAds(dataSetForSearch);
-};
-
-housingRooms.addEventListener('change', debounce(onChangeRooms));
-
-const onChangeGuests = (evt) => {
-  const guests = evt.target.value;
-  dataSetForSearch.guests = guests;
-  sortAds(dataSetForSearch);
-};
-
-housingGuests.addEventListener('change', debounce(onChangeGuests));
-
-const onChangeFeatures = (evt) => {
-  if (dataSetForSearch.features.includes(evt.target.value)) {
-    const indexFeatures = dataSetForSearch.features.indexOf(evt.target.value);
-
-    dataSetForSearch.features.splice(indexFeatures, 1);
-    sortAds(dataSetForSearch);
-  } else {
-
-    dataSetForSearch.features.push(evt.target.value);
-    sortAds(dataSetForSearch);
-  }
-};
-
-mapFeatures.addEventListener('change', debounce(onChangeFeatures));
+mapFilter.addEventListener('change', debounce(onChangeFilter));
 
 export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch};

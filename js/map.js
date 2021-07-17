@@ -70,7 +70,7 @@ const markerGroup = L.layerGroup().addTo(map);
 
 // Генерация карты и маркеров на страницу
 const generatingPosters = (ads) => {
-
+  markerGroup.clearLayers();
   ads.forEach((ad) => {
     const {lat, lng} = ad.location;
     const iconAd = L.icon({
@@ -100,4 +100,4 @@ mainPinMarker.on('moveend', (evt) => {
   sortAds(dataSetForSearch);
 });
 
-export {generatingPosters, addMainMarker, drawMarker, database, markerGroup};
+export {generatingPosters, addMainMarker, drawMarker, database};
