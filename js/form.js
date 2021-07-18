@@ -1,6 +1,7 @@
 import {sendData} from './create-fetch.js';
 import {addMainMarker} from './map.js';
-import {mapFilter, mapFilterChildren} from './filter.js';
+import {mapFilter, mapFilterChildren, onClearFilter} from './filter.js';
+import {addPhoto} from './upload-image.js';
 
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
@@ -17,6 +18,10 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const inputAddress = adForm.querySelector('#address');
 const buttonReset = adForm.querySelector('.ad-form__reset');
+const adFormField = adForm.querySelector('.ad-form__field input[type=file]');
+const adFormHeaderPreview = adForm.querySelector('.ad-form-header__preview');
+const adFormUpload = adForm.querySelector('.ad-form__upload input[type=file');
+const adFormPhoto =adForm.querySelector('.ad-form__photo');
 
 const listMinPriceHousing = {
   bungalow: 0,
@@ -32,6 +37,27 @@ const guestRooms = {
   '3': ['1', '2', '3'],
   '100': ['0'],
 };
+
+// Создаем блок img для фото жилья
+const createBlock = () => {
+  const photoHousing = document.createElement('img');
+  photoHousing.style.width = `${70}px`;
+  photoHousing.style.height = `${70}px`;
+  adFormPhoto.appendChild(photoHousing);
+};
+
+// Загрузка аватарки
+adFormField.addEventListener('change', () => {
+  const file = adFormField.files[0];
+  addPhoto(file, adFormHeaderPreview);
+});
+
+// Загрузка фото жилья
+adFormUpload.addEventListener('change', () => {
+  const file = adFormUpload.files[0];
+  if (!adFormPhoto.querySelector('img')) {createBlock();}
+  addPhoto(file, adFormPhoto);
+});
 
 // Блокировка интерактивных полей фрмы и фильтра
 const blockIt = (block, listChildren) => {
@@ -148,7 +174,10 @@ const adDataSetSubmit = (onSuccess, onError) => {
 // Очистка формы, нажатие кнопки - очистить
 const onClearForm = () => {
   adForm.reset();
+  adFormHeaderPreview.querySelector('img').src = 'img/muffin-grey.svg';
+  if (adFormPhoto.querySelector('img')) {adFormPhoto.querySelector('img').remove();}
   addMainMarker();
+  onClearFilter();
 };
 
 buttonReset.addEventListener('click', onClearForm);

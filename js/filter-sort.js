@@ -8,6 +8,16 @@ const HIGH_CHOICE = 'high';
 const MIN_PRICE = 10000;
 const MAX_PRICE = 50000;
 
+const checkSelection = (choice, base) => {
+  if (choice.length === 1) {
+    choice = Number(choice);
+  }
+  if (choice !== ANY_CHOICE && choice !== base) {
+    return false;
+  }
+  return true;
+};
+
 const checkFeatures = (choice, base) => {
   if (base) {
     return choice.every((feature) => base.includes(feature));
@@ -15,12 +25,11 @@ const checkFeatures = (choice, base) => {
   return true;
 };
 
-const checkGuests = (choice, base) => {
-  if (choice !== ANY_CHOICE && Number(choice) !== base) {
-    return false;
-  }
-  return true;
-};
+const checkGuests = (choice, base) => checkSelection(choice, base);
+
+const checkRooms = (choice, base) => checkSelection(choice, base);
+
+const checkType = (choice, base) => checkSelection(choice, base);
 
 const checkPrice = (choice, base) => {
   if (choice === ANY_CHOICE) {
@@ -34,20 +43,6 @@ const checkPrice = (choice, base) => {
   }
   if (choice === HIGH_CHOICE ) {
     return base > MAX_PRICE;
-  }
-  return true;
-};
-
-const checkRooms = (choice, base) => {
-  if (choice !== ANY_CHOICE && Number(choice) !== base) {
-    return false;
-  }
-  return true;
-};
-
-const checkType = (choice, base) => {
-  if (choice !== ANY_CHOICE && choice !== base) {
-    return false;
   }
   return true;
 };
