@@ -1,15 +1,13 @@
 import {sendData} from './create-fetch.js';
 import {addMainMarker} from './map.js';
+import {mapFilter, mapFilterChildren} from './filter.js';
 
 const MIN_HEADING = 30;
 const MAX_HEADING = 100;
 const MAX_PRICE = 1000000;
 
-const mapFilter = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
-
 const adFormChildren = adForm.querySelectorAll('fieldset');
-const mapFilterChildren = mapFilter.querySelectorAll('.map__filter');
 const inputTitle = adForm.querySelector('#title');
 const inputPrice = adForm.querySelector('#price');
 const inputType = adForm.querySelector('#type');
@@ -35,7 +33,7 @@ const guestRooms = {
   '100': ['0'],
 };
 
-// Блокировка интерактивных полей двух фильтров
+// Блокировка интерактивных полей фрмы и фильтра
 const blockIt = (block, listChildren) => {
   block.classList.add('ad-form--disabled');
   listChildren.forEach((item) => {
@@ -46,14 +44,10 @@ const blockIt = (block, listChildren) => {
 blockIt(adForm, adFormChildren);
 blockIt(mapFilter, mapFilterChildren);
 
-// Разблокировка интерактивных полей двух фильтров
-const unlock = () => {
+// Разблокировка интерактивных полей формы
+const unlockForm = () => {
   adForm.classList.remove('ad-form--disabled');
-  mapFilter.classList.remove('ad-form--disabled');
   adFormChildren.forEach((item) => {
-    item.removeAttribute('disabled');
-  });
-  mapFilterChildren.forEach((item) => {
     item.removeAttribute('disabled');
   });
 };
@@ -159,4 +153,4 @@ const onClearForm = () => {
 
 buttonReset.addEventListener('click', onClearForm);
 
-export {enterСoordinates, unlock, adDataSetSubmit, onClearForm};
+export {enterСoordinates, unlockForm, adDataSetSubmit, onClearForm, inputAddress};

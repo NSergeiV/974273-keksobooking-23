@@ -1,8 +1,11 @@
 import {showAlert} from './show-alert.js';
 
+const URL_GET = 'https://23.javascript.pages.academy/keksobooking/data';
+const URL_POST = 'https://23.javascript.pages.academy/keksobooking';
+
 const getData = (onSuccess) => {
   fetch(
-    'https://23.javascript.pages.academy/keksobooking/data',
+    URL_GET,
     {
       method: 'GET',
       credentials: 'same-origin',
@@ -24,7 +27,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onError, body) => {
   fetch(
-    'https://23.javascript.pages.academy/keksobooking',
+    URL_POST,
     {
       method: 'POST',
       body,
