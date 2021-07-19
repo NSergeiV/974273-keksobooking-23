@@ -17,7 +17,6 @@ const receiveTypeHousing = (type) => {
   }
 };
 
-// Создание балуна (попап объявления)
 const createCustomPopup = (point) => {
   const copyBalloonPopup = templateBalloon.cloneNode(true);
 

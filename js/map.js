@@ -23,8 +23,8 @@ const drawMarker = () => {
 };
 
 const map = L.map('map-canvas').on('load', drawMarker).setView({
-  lat: LAT_TOKYO, // широта центра Токио
-  lng: LNG_TOKYO, // долгота центра Токио
+  lat: LAT_TOKYO,
+  lng: LNG_TOKYO,
 }, 13);
 
 L.tileLayer(
@@ -68,7 +68,6 @@ expose();
 
 const markerGroup = L.layerGroup().addTo(map);
 
-// Генерация карты и маркеров на страницу
 const generatingPosters = (ads) => {
   markerGroup.clearLayers();
   ads.forEach((ad) => {
@@ -92,9 +91,7 @@ const generatingPosters = (ads) => {
     );
   });
 };
-// КОНЕЦ блока генерации
 
-// Перемещение маркера по карте и передача координат
 mainPinMarker.on('moveend', (evt) => {
   enterСoordinates(evt.target.getLatLng().lat, evt.target.getLatLng().lng);
   sortAds(dataSetForSearch);
