@@ -20,7 +20,6 @@ const housingRooms = mapFilter.querySelector('#housing-rooms');
 const housingGuests = mapFilter.querySelector('#housing-guests');
 const mapFeatures =mapFilter.querySelectorAll('#housing-features input');
 
-// Отправка массива из 10 на отрисовку в карту
 const selectMarkers = (ads) => {
   const allAds = ads.slice();
   const similarAds = allAds.slice(0, SIMILAR_AD_COUNT);
@@ -28,7 +27,6 @@ const selectMarkers = (ads) => {
   generatingPosters(similarAds);
 };
 
-// Разблокировка интерактивных полей фильтра
 const unlockFilter = (ads) => {
   selectMarkers(ads);
   mapFilter.classList.remove('ad-form--disabled');
@@ -36,8 +34,6 @@ const unlockFilter = (ads) => {
     item.removeAttribute('disabled');
   });
 };
-
-// Сброс фильтра
 
 const onClearFilter = () => {
   dataSetForSearch.type = 'any';
@@ -50,8 +46,6 @@ const onClearFilter = () => {
 
   sortAds(dataSetForSearch);
 };
-
-// Изменение запроса данных фильтра
 
 const onChangeFilter = () => {
   dataSetForSearch.type = housingType.value;

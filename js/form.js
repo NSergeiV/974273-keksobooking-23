@@ -38,7 +38,6 @@ const guestRooms = {
   '100': ['0'],
 };
 
-// Создаем блок img для фото жилья
 const createBlock = () => {
   const photoHousing = document.createElement('img');
   photoHousing.style.width = `${70}px`;
@@ -46,20 +45,17 @@ const createBlock = () => {
   adFormPhoto.appendChild(photoHousing);
 };
 
-// Загрузка аватарки
 adFormField.addEventListener('change', () => {
   const file = adFormField.files[0];
   addPhoto(file, adFormHeaderPreview);
 });
 
-// Загрузка фото жилья
 adFormUpload.addEventListener('change', () => {
   const file = adFormUpload.files[0];
   if (!adFormPhoto.querySelector('img')) {createBlock();}
   addPhoto(file, adFormPhoto);
 });
 
-// Блокировка интерактивных полей фрмы и фильтра
 const blockIt = (block, listChildren) => {
   block.classList.add('ad-form--disabled');
   listChildren.forEach((item) => {
@@ -70,7 +66,6 @@ const blockIt = (block, listChildren) => {
 blockIt(adForm, adFormChildren);
 blockIt(mapFilter, mapFilterChildren);
 
-// Разблокировка интерактивных полей формы
 const unlockForm = () => {
   adForm.classList.remove('ad-form--disabled');
   adFormChildren.forEach((item) => {
@@ -78,12 +73,10 @@ const unlockForm = () => {
   });
 };
 
-// Валидация поля Адресс
 const enterСoordinates = (lat, lng) => {
   inputAddress.value = `${Number(lat.toFixed(5))}, ${Number(lng.toFixed(5))}`;
 };
 
-// Валидация поля времени заезда и выезда
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
 });
@@ -92,7 +85,6 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
-// Валидация заголовка
 inputTitle.addEventListener('input', () => {
   const valueLength = inputTitle.value.length;
   if (valueLength < MIN_HEADING) {
@@ -105,8 +97,6 @@ inputTitle.addEventListener('input', () => {
 
   inputTitle.reportValidity();
 });
-
-// Валидация цены за жилье на ночь
 
 let selectedPrice = inputType.querySelector('option[selected]').value;
 let nameTypeHousing = inputType.querySelector('option[selected]').text;
@@ -139,8 +129,6 @@ inputPrice.addEventListener('input', () => {
   inputPrice.reportValidity();
 });
 
-// Валидация количества гостей
-
 let numberRooms = selectRoomNumber.querySelector('option[selected]').value;
 let numberGuests = inputCapacity.querySelector('option[selected]').value;
 
@@ -163,7 +151,6 @@ inputCapacity.addEventListener('change', () => {
   checkGuests(numberRooms, numberGuests);
 });
 
-// Отправка данных, нажатие кнопки
 const adDataSetSubmit = (onSuccess, onError) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -171,7 +158,6 @@ const adDataSetSubmit = (onSuccess, onError) => {
   });
 };
 
-// Очистка формы, нажатие кнопки - очистить
 const onClearForm = () => {
   adForm.reset();
   adFormHeaderPreview.querySelector('img').src = 'img/muffin-grey.svg';

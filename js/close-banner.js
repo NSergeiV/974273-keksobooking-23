@@ -1,4 +1,3 @@
-// Закрытие баннеров с данными и карточки с информацией
 const KODE_ESC = 27;
 
 const closeBanner = (baner) => {

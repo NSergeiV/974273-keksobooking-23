@@ -7,14 +7,12 @@ const templateCope = templateMessage.cloneNode(true);
 const templateError = document.querySelector('#error').content.querySelector('.error');
 const templateCopeError = templateError.cloneNode(true);
 
-// Банер удачной отправик данных
 const pushGoodData = () => {
   onClearForm();
   mainBody.insertAdjacentElement('beforeend', templateCope);
   closeBanner(templateCope);
 };
 
-// Банер неудачной отправки
 const errorPushData = () => {
   mainBody.insertAdjacentElement('beforeend', templateCopeError);
   closeBanner(templateCopeError);
