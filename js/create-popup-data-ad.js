@@ -19,6 +19,8 @@ const receiveTypeHousing = (type) => {
 
 const createCustomPopup = (point) => {
   const copyBalloonPopup = templateBalloon.cloneNode(true);
+  const balloonFeatures = copyBalloonPopup.querySelector('.popup__features');
+  const balloonDescription = copyBalloonPopup.querySelector('.popup__description');
 
   copyBalloonPopup.querySelector('.popup__avatar').src = point.author.avatar;
   copyBalloonPopup.querySelector('.popup__title').textContent = point.offer.title;
@@ -29,11 +31,11 @@ const createCustomPopup = (point) => {
   copyBalloonPopup.querySelector('.popup__text--capacity').textContent = `${point.offer.rooms} комнаты для ${point.offer.guests} гостей`;
   copyBalloonPopup.querySelector('.popup__text--time').textContent = `Заезд после ${point.offer.checkin}, выезд до ${point.offer.checkout}}`;
   if (!point.offer.features) {
-    copyBalloonPopup.querySelector('.popup__features').classList.add('popup__features');
+    balloonFeatures.classList.add('hidden');
   } else {
     const conveniences = point.offer.features;
     const modifiers = conveniences.map((feature) => `popup__feature--${feature}`);
-    copyBalloonPopup.querySelector('.popup__features').querySelectorAll('.popup__feature').forEach((item) => {
+    balloonFeatures.querySelectorAll('.popup__feature').forEach((item) => {
       const classItem = item.classList[1];
       if (!modifiers.includes(classItem)) {
         item.remove();
@@ -42,14 +44,14 @@ const createCustomPopup = (point) => {
   }
 
   if (!point.offer.description) {
-    copyBalloonPopup.querySelector('.popup__description').classList.add('popup__features');
+    balloonDescription.classList.add('hidden');
   } else {
-    copyBalloonPopup.querySelector('.popup__description').textContent = point.offer.description;
+    balloonDescription.textContent = point.offer.description;
   }
 
   const blockPhotos = copyBalloonPopup.querySelector('.popup__photos');
   if (!point.offer.photos) {
-    blockPhotos.classList.add('popup__features');
+    blockPhotos.classList.add('hidden');
   } else {
     blockPhotos.querySelector('img').remove();
     for (let j = 0; j < point.offer.photos.length; j++) {
