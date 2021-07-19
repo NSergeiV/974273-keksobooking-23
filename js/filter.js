@@ -37,6 +37,20 @@ const unlockFilter = (ads) => {
   });
 };
 
+// Сброс фильтра
+
+const onClearFilter = () => {
+  dataSetForSearch.type = 'any';
+  dataSetForSearch.price = 'any';
+  dataSetForSearch.rooms = 'any';
+  dataSetForSearch.guests = 'any';
+  dataSetForSearch.features = [];
+
+  mapFilter.reset();
+
+  sortAds(dataSetForSearch);
+};
+
 // Изменение запроса данных фильтра
 
 const onChangeFilter = () => {
@@ -51,4 +65,4 @@ const onChangeFilter = () => {
 
 mapFilter.addEventListener('change', debounce(onChangeFilter));
 
-export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch};
+export {mapFilter, mapFilterChildren, unlockFilter, selectMarkers, dataSetForSearch, onClearFilter};
